@@ -1,4 +1,5 @@
 *.pyc
+.tox
 bin
 include
 lib
