@@ -13,7 +13,24 @@ def time_to_seconds(timestamp):
 
 
 def add_maintenance_period(url, user, password, message, duration, hostnames):
-    pass
+    zabbix = pyzabbix.ZabbixAPI(url)
+    zabbix.login(user, password)
+
+    maintenance = {
+        'timeperiods': [{
+            'timeperiod_type': 0,  # One time only
+
+            'day': 1,
+            'month': 0,
+            'dayofweek': 0,
+            'every': 1,
+
+            'start_date': date_to_seconds(datetime.now()),
+            'start_time': time_to_seconds(datetime.now()),
+            'period': duration * 60,
+        }]
+    }
+    zabbix.maintenance.create(**maintenance)
 
 
 def main(argv=None):
